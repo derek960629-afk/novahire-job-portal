@@ -13,10 +13,19 @@
 
   <groupId>com.novahire</groupId>
   <artifactId>novahire-server</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>war</packaging>
   <name>NovaHire Server</name>
   <description>NovaHire job portal backend</description>
+
+  <licenses>
+    <license>
+      <name>PolyForm Noncommercial License 1.0.0</name>
+      <url>https://polyformproject.org/licenses/noncommercial/1.0.0</url>
+      <distribution>repo</distribution>
+      <comments>Source-available. Free for noncommercial use only. Commercial use requires separate written permission.</comments>
+    </license>
+  </licenses>
 
   <properties>
     <java.version>17</java.version>
