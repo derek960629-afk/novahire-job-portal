@@ -1,0 +1,21 @@
+# Maven
+server/target/
+*.war.original
+
+# Local build artifacts (WAR is published as a GitHub Release asset)
+dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs and local config
+*.log
+.env
+server/src/main/resources/application-local.yml

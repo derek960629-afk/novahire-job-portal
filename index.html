@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>星聘 NovaHire · 找到懂你的下一份工作</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --bg-soft: #0b1220;
+    --panel: rgba(17, 25, 40, 0.72);
+    --panel-solid: #111928;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.16);
+    --text: #e8eefc;
+    --muted: #8b9ab5;
+    --cyan: #22d3ee;
+    --indigo: #818cf8;
+    --violet: #a78bfa;
+    --lime: #a3e635;
+    --radius: 18px;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(900px 600px at 12% -8%, rgba(34, 211, 238, 0.16), transparent 60%),
+      radial-gradient(800px 600px at 88% 4%, rgba(129, 140, 248, 0.18), transparent 62%),
+      radial-gradient(700px 500px at 50% 100%, rgba(167, 139, 250, 0.10), transparent 65%);
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; border: none; background: none; }
+
+  .wrap { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(7, 11, 20, 0.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav {
+    height: 68px;
+    display: flex;
+    align-items: center;
+    gap: 34px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--cyan), var(--indigo) 55%, var(--violet));
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.45);
+    position: relative;
+  }
+
+  .brand-mark::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 2px solid rgba(7, 11, 20, 0.85);
+    border-radius: 4px;
+    transform: rotate(45deg);
+  }
+
+  .brand .brand-text { background: linear-gradient(90deg, #fff, #a9c2ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .nav-links { display: flex; gap: 26px; font-size: 14px; color: var(--muted); }
+  .nav-links a { transition: color 0.18s ease; }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 11px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--indigo));
+    color: #04101a;
+    box-shadow: 0 8px 26px rgba(34, 211, 238, 0.28);
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(34, 211, 238, 0.4); }
+
+  .btn-ghost {
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+  .hero { padding: 76px 0 44px; text-align: center; position: relative; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 15px;
+    border-radius: 999px;
+    font-size: 13px;
+    color: #bfe9ff;
+    border: 1px solid rgba(34, 211, 238, 0.28);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5); }
+    70% { box-shadow: 0 0 0 9px rgba(34, 211, 238, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+  }
+
+  .hero h1 {
+    margin: 22px 0 14px;
+    font-size: clamp(34px, 5.4vw, 60px);
+    line-height: 1.15;
+    letter-spacing: -1.5px;
+    font-weight: 800;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(100deg, var(--cyan), var(--indigo) 55%, var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 620px;
+    margin: 0 auto 34px;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px;
+    border-radius: 16px;
+    max-width: 880px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+  }
+
+  .search-field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    height: 50px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid transparent;
+    transition: border 0.18s ease, background 0.18s ease;
+    min-width: 0;
+  }
+
+  .search-field:focus-within {
+    border-color: rgba(34, 211, 238, 0.5);
+    background: rgba(34, 211, 238, 0.05);
+  }
+
+  .search-field svg { flex-shrink: 0; color: var(--muted); }
+
+  .search-field input {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    min-width: 0;
+  }
+
+  .search-field input::placeholder { color: #66748f; }
+
+  .search select {
+    height: 50px;
+    padding: 0 38px 0 16px;
+    border-radius: 11px;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.035);
+    outline: none;
+    font-size: 15px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238b9ab5' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+  }
+
+  .search select option { background: #111928; }
+
+  .search .btn { height: 50px; padding: 0 28px; border-radius: 11px; }
+
+  .hot-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .hot-tags button {
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    transition: all 0.18s ease;
+  }
+
+  .hot-tags button:hover {
+    color: var(--cyan);
+    border-color: rgba(34, 211, 238, 0.45);
+    background: rgba(34, 211, 238, 0.07);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 34px 0 70px;
+  }
+
+  .stat {
+    padding: 22px 24px;
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.55), transparent);
+  }
+
+  .stat b {
+    display: block;
+    font-size: 28px;
+    letter-spacing: -0.6px;
+    background: linear-gradient(100deg, #fff, #9fd8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .stat span { font-size: 13px; color: var(--muted); }
+
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+  }
+
+  .section-head h2 { font-size: 26px; letter-spacing: -0.5px; }
+  .section-head p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+  .link-more {
+    color: var(--cyan);
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.2s ease;
+  }
+
+  .link-more:hover { gap: 10px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 248px 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 74px;
+  }
+
+  .filters {
+    border-radius: var(--radius);
+    padding: 22px;
+    position: sticky;
+    top: 88px;
+  }
+
+  .filters h3 {
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+  }
+
+  .filters h3 + h3 { margin-top: 24px; }
+
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    padding: 6px 12px;
+    border-radius: 9px;
+    font-size: 13px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.18s ease;
+  }
+
+  .chip:hover { color: var(--text); border-color: var(--line-strong); }
+
+  .chip.active {
+    color: #04101a;
+    background: linear-gradient(135deg, var(--cyan), var(--indigo));
+    border-color: transparent;
+    font-weight: 700;
+  }
+
+  .salary-select {
+    width: 100%;
+    height: 42px;
+    padding: 0 38px 0 13px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    outline: none;
+    font-size: 14px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238b9ab5' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    cursor: pointer;
+  }
+
+  .salary-select option { background: #111928; }
+
+  .reset-btn {
+    margin-top: 22px;
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px dashed var(--line-strong);
+    color: var(--muted);
+    font-size: 13px;
+    transition: all 0.18s ease;
+  }
+
+  .reset-btn:hover { color: var(--cyan); border-color: rgba(34, 211, 238, 0.5); }
+
+  .list-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .result-count { font-size: 14px; color: var(--muted); }
+  .result-count b { color: var(--cyan); font-size: 16px; }
+
+  .sort {
+    height: 38px;
+    padding: 0 34px 0 13px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    outline: none;
+    font-size: 13px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238b9ab5' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    cursor: pointer;
+  }
+
+  .sort option { background: #111928; }
+
+  .job-list { display: grid; gap: 14px; }
+
+  .job-card {
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    animation: rise 0.35s ease both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .job-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--cyan), var(--indigo), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .job-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(34, 211, 238, 0.32);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+  }
+
+  .job-card:hover::before { opacity: 1; }
+
+  .job-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 18px;
+    color: #061019;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .job-main { flex: 1; min-width: 0; }
+
+  .job-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .job-title { font-size: 17px; font-weight: 700; letter-spacing: -0.2px; }
+
+  .hot-badge {
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 5px;
+    color: #ffd6a5;
+    background: rgba(251, 146, 60, 0.14);
+    border: 1px solid rgba(251, 146, 60, 0.3);
+  }
+
+  .job-company { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+  .salary {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    background: linear-gradient(100deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+  }
+
+  .job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 14px 0 0;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    color: #a9b8d4;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid var(--line);
+  }
+
+  .job-bottom {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 15px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .meta { display: inline-flex; align-items: center; gap: 5px; }
+
+  .job-bottom .spacer { flex: 1; }
+
+  .fav {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: var(--muted);
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
+  }
+
+  .fav:hover { color: #ffb4c8; border-color: rgba(244, 114, 182, 0.35); background: rgba(244, 114, 182, 0.07); }
+  .fav.active { color: #ff8fb1; }
+  .fav.active svg { fill: currentColor; }
+
+  .empty {
+    text-align: center;
+    padding: 70px 20px;
+    border-radius: var(--radius);
+    border: 1px dashed var(--line-strong);
+    color: var(--muted);
+  }
+
+  .empty strong { display: block; color: var(--text); font-size: 17px; margin-bottom: 6px; }
+
+  .companies { margin-bottom: 78px; }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .company-card {
+    border-radius: var(--radius);
+    padding: 22px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .company-card:hover { transform: translateY(-3px); border-color: rgba(129, 140, 248, 0.35); }
+
+  .company-card .logo { width: 44px; height: 44px; border-radius: 11px; font-size: 16px; }
+
+  .company-card b { display: block; font-size: 15px; }
+  .company-card small { color: var(--muted); font-size: 12.5px; }
+  .company-card .jobs-num { margin-left: auto; color: var(--cyan); font-size: 12.5px; white-space: nowrap; }
+
+  .cta {
+    position: relative;
+    border-radius: 24px;
+    padding: 52px 40px;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 78px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.12), rgba(129, 140, 248, 0.14), rgba(167, 139, 250, 0.12));
+    border: 1px solid rgba(129, 140, 248, 0.28);
+  }
+
+  .cta h2 { font-size: clamp(24px, 3.4vw, 36px); letter-spacing: -0.8px; margin-bottom: 10px; }
+  .cta p { color: var(--muted); margin-bottom: 26px; }
+
+  .cta-glow {
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.35), transparent 70%);
+    top: -190px;
+    right: -100px;
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 44px 0 34px;
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 36px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand { max-width: 300px; }
+  .footer-brand .brand { margin-bottom: 12px; }
+  .footer-brand p { font-size: 13px; line-height: 1.7; }
+
+  .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-cols h4 { color: var(--text); font-size: 13.5px; margin-bottom: 12px; }
+  .footer-cols a { display: block; margin-bottom: 9px; transition: color 0.18s ease; }
+  .footer-cols a:hover { color: var(--cyan); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(4, 7, 13, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+
+  .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .modal {
+    width: min(620px, 100%);
+    max-height: 86vh;
+    overflow-y: auto;
+    border-radius: 22px;
+    background: linear-gradient(180deg, #121b2c, #0c1322);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    transform: translateY(14px) scale(0.98);
+    transition: transform 0.22s ease;
+    padding: 28px;
+  }
+
+  .modal-backdrop.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
+  .modal-head .logo { width: 56px; height: 56px; border-radius: 14px; font-size: 20px; }
+  .modal-head h3 { font-size: 21px; letter-spacing: -0.4px; }
+  .modal-head p { color: var(--muted); font-size: 13.5px; }
+
+  .modal-close {
+    margin-left: auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    display: grid;
+    place-items: center;
+    transition: all 0.18s ease;
+  }
+
+  .modal-close:hover { color: var(--text); background: rgba(255, 255, 255, 0.07); }
+
+  .modal-salary {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(100deg, var(--lime), var(--cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 18px;
+  }
+
+  .modal-section { margin-top: 22px; }
+  .modal-section h4 { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .modal-section p, .modal-section li { font-size: 14px; color: #c6d2e8; }
+  .modal-section ul { padding-left: 18px; display: grid; gap: 6px; }
+
+  .modal-actions { display: flex; gap: 12px; margin-top: 28px; }
+  .modal-actions .btn { flex: 1; height: 46px; }
+
+  .form-grid { display: grid; gap: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    outline: none;
+    font-size: 14px;
+    transition: border 0.18s ease, background 0.18s ease;
+  }
+  .field input:focus, .field textarea:focus {
+    border-color: rgba(34, 211, 238, 0.5);
+    background: rgba(34, 211, 238, 0.04);
+  }
+  .field textarea { resize: vertical; min-height: 84px; }
+  .apply-hint { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 34px;
+    transform: translate(-50%, 20px);
+    z-index: 200;
+    padding: 11px 20px;
+    border-radius: 11px;
+    background: rgba(17, 25, 40, 0.95);
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    color: var(--text);
+    font-size: 13.5px;
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+  }
+
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 940px) {
+    .nav-links { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .layout { grid-template-columns: 1fr; }
+    .filters { position: static; }
+    .company-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 660px) {
+    .wrap { width: calc(100% - 28px); }
+    .hero { padding: 52px 0 34px; }
+    .search { flex-direction: column; align-items: stretch; }
+    .search select { width: 100%; }
+    .search-field, .search .btn { height: 46px; }
+    .search select { height: 46px; }
+    .stats { gap: 10px; }
+    .stat { padding: 16px; }
+    .stat b { font-size: 22px; }
+    .company-grid { grid-template-columns: 1fr; }
+    .job-card { padding: 18px; }
+    .job-top { gap: 12px; }
+    .salary { font-size: 15px; }
+    .cta { padding: 38px 22px; }
+    .footer-cols { gap: 32px; }
+    .nav-actions .btn-ghost { display: none; }
+    .modal { padding: 22px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><span class="brand-mark"></span><span class="brand-text">星聘 NovaHire</span></a>
+    <nav class="nav-links">
+      <a href="#jobs">职位</a>
+      <a href="#companies">公司</a>
+      <a href="#salary">薪资报告</a>
+      <a href="#community">社区</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn btn-ghost" data-toast="登录功能演示中">登录</button>
+      <button class="btn btn-primary" data-toast="已进入企业发布通道">发布职位</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero wrap">
+  <div class="badge"><span class="dot"></span>2026 金秋招聘季 · 12,846 个新职位上线</div>
+  <h1>找到懂你的<br /><em>下一份工作</em></h1>
+  <p>聚焦 AI、互联网与硬科技赛道。智能匹配岗位画像，平均 2 小时内获得企业响应。</p>
+
+  <div class="search glass">
+    <label class="search-field">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="keyword" type="text" placeholder="搜索职位、公司或技能，如：前端 / LLM / 远程" autocomplete="off" />
+    </label>
+    <select id="city">
+      <option value="不限">全部城市</option>
+      <option value="北京">北京</option>
+      <option value="上海">上海</option>
+      <option value="深圳">深圳</option>
+      <option value="杭州">杭州</option>
+      <option value="广州">广州</option>
+      <option value="成都">成都</option>
+      <option value="远程">远程</option>
+    </select>
+    <button class="btn btn-primary" id="searchBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      搜职位
+    </button>
+  </div>
+
+  <div class="hot-tags">
+    <span style="align-self:center">热门搜索：</span>
+    <button data-keyword="前端">前端工程师</button>
+    <button data-keyword="大模型">大模型算法</button>
+    <button data-keyword="产品">AI 产品经理</button>
+    <button data-keyword="远程">远程工作</button>
+    <button data-keyword="Java">Java 后端</button>
+    <button data-keyword="设计">UI 设计</button>
+  </div>
+</section>
+
+<div class="wrap stats">
+  <div class="stat glass"><b id="statCompanies">5,200+</b><span>认证合作企业</span></div>
+  <div class="stat glass"><b id="statJobs">12,846</b><span>实时在招职位</span></div>
+  <div class="stat glass"><b id="statResponse">2 小时</b><span>平均企业响应</span></div>
+  <div class="stat glass"><b id="statPlacements">86,000+</b><span>成功入职人才</span></div>
+</div>
+
+<main class="wrap" id="jobs">
+  <div class="section-head">
+    <div>
+      <h2>精选职位</h2>
+      <p>基于你的浏览偏好与技能标签实时推荐</p>
+    </div>
+    <a class="link-more" href="#companies">浏览全部职位 →</a>
+  </div>
+
+  <div class="layout">
+    <aside class="filters glass">
+      <h3>工作经验</h3>
+      <div class="chip-group" id="expChips">
+        <button class="chip active" data-exp="不限">不限</button>
+        <button class="chip" data-exp="应届">应届</button>
+        <button class="chip" data-exp="1-3年">1-3 年</button>
+        <button class="chip" data-exp="3-5年">3-5 年</button>
+        <button class="chip" data-exp="5年以上">5 年以上</button>
+      </div>
+
+      <h3>薪资范围</h3>
+      <select class="salary-select" id="salary">
+        <option value="不限">不限薪资</option>
+        <option value="0-15">15K 以下</option>
+        <option value="15-25">15K - 25K</option>
+        <option value="25-40">25K - 40K</option>
+        <option value="40+">40K 以上</option>
+      </select>
+
+      <h3>职位类型</h3>
+      <div class="chip-group" id="typeChips">
+        <button class="chip active" data-type="不限">不限</button>
+        <button class="chip" data-type="全职">全职</button>
+        <button class="chip" data-type="实习">实习</button>
+        <button class="chip" data-type="远程">远程</button>
+      </div>
+
+      <button class="reset-btn" id="resetBtn">重置全部筛选</button>
+    </aside>
+
+    <section>
+      <div class="list-toolbar">
+        <div class="result-count">共找到 <b id="count">0</b> 个职位</div>
+        <select class="sort" id="sort">
+          <option value="recommend">智能推荐</option>
+          <option value="latest">最新发布</option>
+          <option value="salary">薪资最高</option>
+        </select>
+      </div>
+      <div class="job-list" id="jobList"></div>
+    </section>
+  </div>
+</main>
+
+<section class="companies wrap" id="companies">
+  <div class="section-head">
+    <div>
+      <h2>正在招聘的团队</h2>
+      <p>与优秀的人一起，做有挑战的事</p>
+    </div>
+    <a class="link-more" href="#jobs">查看全部 →</a>
+  </div>
+  <div class="company-grid" id="companyGrid"></div>
+</section>
+
+<section class="wrap">
+  <div class="cta">
+    <div class="cta-glow"></div>
+    <h2>企业招聘，快人一步</h2>
+    <p>发布职位后平均 6 小时收到首份匹配简历，AI 帮你自动筛选候选人。</p>
+    <button class="btn btn-primary" data-toast="企业合作申请已提交，我们会尽快联系你">免费发布职位</button>
+  </div>
+</section>
+
+<footer id="community">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="#"><span class="brand-mark"></span><span class="brand-text">星聘 NovaHire</span></a>
+        <p>面向 AI 与科技人才的智能招聘平台，让每一次职业选择都更清晰。</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>求职者</h4>
+          <a href="#jobs">浏览职位</a>
+          <a href="#jobs">薪资报告</a>
+          <a href="#jobs">简历优化</a>
+        </div>
+        <div>
+          <h4>企业</h4>
+          <a href="#jobs">发布职位</a>
+          <a href="#jobs">人才搜索</a>
+          <a href="#jobs">雇主品牌</a>
+        </div>
+        <div>
+          <h4>关于</h4>
+          <a href="#jobs">关于我们</a>
+          <a href="#jobs">联系方式</a>
+          <a href="#jobs">隐私政策</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NovaHire 星聘 · 演示页面</span>
+      <span>隐私优先 · 数据不留存 · 仅用于产品展示</span>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <div class="logo" id="modalLogo">N</div>
+      <div>
+        <h3 id="modalTitle">职位名称</h3>
+        <p id="modalCompany">公司名称</p>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="关闭">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="modal-salary" id="modalSalary"></div>
+    <div class="job-tags" id="modalTags"></div>
+    <div class="modal-section">
+      <h4>职位描述</h4>
+      <p id="modalDesc"></p>
+    </div>
+    <div class="modal-section">
+      <h4>任职要求</h4>
+      <ul id="modalReqs"></ul>
+    </div>
+    <div class="modal-section">
+      <h4>工作信息</h4>
+      <p id="modalMeta"></p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modalFav">收藏职位</button>
+      <button class="btn btn-primary" id="modalApply">立即投递</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="applyBackdrop">
+  <form class="modal" id="applyForm" novalidate>
+    <div class="modal-head">
+      <div class="logo" style="background:linear-gradient(135deg,#22d3ee,#818cf8)">投</div>
+      <div>
+        <h3>投递简历</h3>
+        <p id="applyTarget">职位名称</p>
+      </div>
+      <button type="button" class="modal-close" id="applyClose" aria-label="关闭">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="form-grid">
+      <div class="form-row">
+        <div class="field">
+          <label for="applyName">姓名 *</label>
+          <input id="applyName" name="name" maxlength="60" required placeholder="你的姓名" />
+        </div>
+        <div class="field">
+          <label for="applyPhone">手机号</label>
+          <input id="applyPhone" name="phone" maxlength="30" placeholder="选填" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="applyEmail">邮箱 *</label>
+        <input id="applyEmail" name="email" type="email" maxlength="120" required placeholder="you@example.com" />
+      </div>
+      <div class="field">
+        <label for="applyResume">简历链接</label>
+        <input id="applyResume" name="resumeUrl" type="url" maxlength="500" placeholder="https://...（选填）" />
+      </div>
+      <div class="field">
+        <label for="applyCover">求职意向</label>
+        <textarea id="applyCover" name="coverLetter" maxlength="2000" placeholder="简单介绍你的经验与期望（选填）"></textarea>
+      </div>
+      <p class="apply-hint" id="applyHint">提交后企业将通过邮箱联系你。</p>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" id="applyCancel">取消</button>
+      <button type="submit" class="btn btn-primary" id="applySubmit">提交投递</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let jobs = [
+    {
+      id: 1,
+      title: "高级前端工程师",
+      company: "星云科技",
+      color: "linear-gradient(135deg,#22d3ee,#818cf8)",
+      salaryMin: 25, salaryMax: 40, salaryText: "25-40K · 16薪",
+      city: "深圳", exp: "3-5年", edu: "本科", type: "全职",
+      tags: ["React", "TypeScript", "WebGL", "性能优化"],
+      industry: "企业服务", size: "500-999人",
+      days: 0.5, hot: true,
+      desc: "负责公司核心数据可视化产品的前端架构设计与性能优化，参与组件库与低代码引擎建设，与产品、设计紧密协作打造极致体验。",
+      reqs: ["3 年以上前端开发经验，精通 React 与 TypeScript", "熟悉 Canvas / WebGL 渲染与大规模数据可视化", "有组件库、低代码平台建设经验者优先", "具备良好的工程化意识与性能调优能力"]
+    },
+    {
+      id: 2,
+      title: "大模型算法工程师",
+      company: "深智未来",
+      color: "linear-gradient(135deg,#a78bfa,#f472b6)",
+      salaryMin: 40, salaryMax: 70, salaryText: "40-70K · 14薪",
+      city: "北京", exp: "3-5年", edu: "硕士", type: "全职",
+      tags: ["LLM", "RAG", "PyTorch", "微调"],
+      industry: "人工智能", size: "100-499人",
+      days: 1, hot: true,
+      desc: "参与企业级大模型应用的算法研发，负责 RAG 检索增强、Agent 工作流与领域微调，推动模型在实际业务场景中的效果落地。",
+      reqs: ["计算机、人工智能相关专业硕士及以上学历", "熟悉 Transformer 架构与主流大模型训练/推理流程", "有 RAG、Agent、多模态项目落地经验", "熟练使用 PyTorch，具备扎实的工程实现能力"]
+    },
+    {
+      id: 3,
+      title: "AI 产品经理",
+      company: "光年互动",
+      color: "linear-gradient(135deg,#34d399,#22d3ee)",
+      salaryMin: 20, salaryMax: 35, salaryText: "20-35K · 15薪",
+      city: "上海", exp: "1-3年", edu: "本科", type: "全职",
+      tags: ["AI 产品", "用户研究", "数据分析", "需求分析"],
+      industry: "内容社区", size: "1000-9999人",
+      days: 2, hot: false,
+      desc: "负责 AI 创作工具的产品规划与迭代，从用户场景出发定义功能，协同算法与研发团队推动产品上线并持续优化核心指标。",
+      reqs: ["1-3 年产品经理经验，有 AI 相关产品经验优先", "具备较强的用户洞察与数据分析能力", "能独立完成需求调研、PRD 撰写与项目推进", "对大模型能力边界有清晰理解"]
+    },
+    {
+      id: 4,
+      title: "Java 后端开发工程师",
+      company: "云帆网络",
+      color: "linear-gradient(135deg,#60a5fa,#818cf8)",
+      salaryMin: 18, salaryMax: 30, salaryText: "18-30K · 14薪",
+      city: "杭州", exp: "1-3年", edu: "本科", type: "全职",
+      tags: ["Java", "Spring Cloud", "MySQL", "Redis"],
+      industry: "云计算", size: "500-999人",
+      days: 1, hot: false,
+      desc: "参与云平台核心服务的研发与维护，负责高并发场景下的接口设计、性能优化与稳定性保障，持续打磨服务质量。",
+      reqs: ["扎实的 Java 基础，熟悉 Spring Boot / Spring Cloud", "熟悉 MySQL、Redis、消息队列等常用中间件", "了解分布式系统设计与高并发处理", "有云原生、Kubernetes 经验者优先"]
+    },
+    {
+      id: 5,
+      title: "UI/UX 设计师",
+      company: "像素工坊",
+      color: "linear-gradient(135deg,#fbbf24,#f472b6)",
+      salaryMin: 12, salaryMax: 20, salaryText: "12-20K · 13薪",
+      city: "广州", exp: "1-3年", edu: "本科", type: "全职",
+      tags: ["Figma", "交互设计", "视觉设计", "设计系统"],
+      industry: "设计服务", size: "50-99人",
+      days: 3, hot: false,
+      desc: "负责 SaaS 产品的界面与交互设计，参与设计系统建设，从概念探索到高保真交付全程跟进，并与前端协作还原设计稿。",
+      reqs: ["1 年以上 UI/UX 设计经验，作品集完整", "熟练使用 Figma，理解组件化设计方法", "具备良好的审美与交互逻辑思维", "有 B 端产品设计经验者优先"]
+    },
+    {
+      id: 6,
+      title: "数据分析师",
+      company: "数澜科技",
+      color: "linear-gradient(135deg,#2dd4bf,#a3e635)",
+      salaryMin: 15, salaryMax: 25, salaryText: "15-25K · 14薪",
+      city: "成都", exp: "1-3年", edu: "本科", type: "全职",
+      tags: ["SQL", "Python", "BI", "指标体系"],
+      industry: "大数据", size: "100-499人",
+      days: 2, hot: false,
+      desc: "面向业务搭建指标体系与数据看板，深入分析用户行为与增长链路，输出可执行的策略建议，支撑产品与运营决策。",
+      reqs: ["熟练使用 SQL，掌握 Python 数据分析工具链", "具备较强的业务理解与逻辑分析能力", "有 BI 工具（Tableau / 观远等）使用经验", "统计学、数学相关专业优先"]
+    },
+    {
+      id: 7,
+      title: "远程全栈工程师",
+      company: "远界科技",
+      color: "linear-gradient(135deg,#a78bfa,#22d3ee)",
+      salaryMin: 30, salaryMax: 50, salaryText: "30-50K · 美元结算",
+      city: "远程", exp: "3-5年", edu: "不限", type: "远程",
+      tags: ["Node.js", "React", "PostgreSQL", "远程协作"],
+      industry: "跨境 SaaS", size: "20-49人",
+      days: 0.8, hot: true,
+      desc: "加入全远程团队，负责跨境 SaaS 产品的全栈开发，从需求拆解到上线运维独立推进，与全球成员异步协作。",
+      reqs: ["3 年以上全栈开发经验，中英文沟通顺畅", "精通 React 与 Node.js，熟悉 PostgreSQL", "具备良好的自我管理与异步协作能力", "有海外产品或远程工作经验者优先"]
+    },
+    {
+      id: 8,
+      title: "测试开发工程师",
+      company: "磐石安全",
+      color: "linear-gradient(135deg,#f87171,#fb923c)",
+      salaryMin: 20, salaryMax: 32, salaryText: "20-32K · 15薪",
+      city: "北京", exp: "3-5年", edu: "本科", type: "全职",
+      tags: ["自动化测试", "Python", "CI/CD", "安全测试"],
+      industry: "网络安全", size: "500-999人",
+      days: 4, hot: false,
+      desc: "负责安全产品的自动化测试体系建设，设计并维护测试框架与流水线，推动质量左移，保障核心业务稳定交付。",
+      reqs: ["3 年以上测试开发经验，熟悉 Python", "有自动化测试框架设计与落地经验", "熟悉 CI/CD 流程与容器化环境", "了解常见安全测试方法与工具"]
+    },
+    {
+      id: 9,
+      title: "运维开发工程师",
+      company: "云帆网络",
+      color: "linear-gradient(135deg,#60a5fa,#818cf8)",
+      salaryMin: 15, salaryMax: 28, salaryText: "15-28K · 14薪",
+      city: "杭州", exp: "1-3年", edu: "本科", type: "全职",
+      tags: ["Linux", "Kubernetes", "Prometheus", "Go"],
+      industry: "云计算", size: "500-999人",
+      days: 5, hot: false,
+      desc: "负责云平台的稳定性建设与自动化运维，参与监控告警、容量规划与故障演练，用工程化手段提升系统可用性。",
+      reqs: ["熟悉 Linux 系统与网络基础", "掌握 Kubernetes、Docker 等容器技术", "熟悉 Prometheus / Grafana 监控体系", "会 Go 或 Python 进行运维工具开发"]
+    },
+    {
+      id: 10,
+      title: "游戏客户端开发",
+      company: "光年互动",
+      color: "linear-gradient(135deg,#34d399,#22d3ee)",
+      salaryMin: 22, salaryMax: 38, salaryText: "22-38K · 16薪",
+      city: "上海", exp: "3-5年", edu: "本科", type: "全职",
+      tags: ["Unity", "C#", "渲染", "性能优化"],
+      industry: "游戏", size: "1000-9999人",
+      days: 3, hot: false,
+      desc: "负责移动端游戏核心玩法与系统模块开发，参与渲染管线与性能优化，与策划、美术协作打磨高品质游戏体验。",
+      reqs: ["3 年以上 Unity 客户端开发经验", "精通 C#，熟悉常用设计模式与架构", "有渲染优化、内存优化实战经验", "有完整上线项目经验者优先"]
+    },
+    {
+      id: 11,
+      title: "新媒体运营（实习）",
+      company: "潮汐文化",
+      color: "linear-gradient(135deg,#f472b6,#fbbf24)",
+      salaryMin: 4, salaryMax: 8, salaryText: "4-8K · 实习",
+      city: "广州", exp: "应届", edu: "本科", type: "实习",
+      tags: ["内容运营", "短视频", "社群", "文案"],
+      industry: "文化传媒", size: "20-49人",
+      days: 0.3, hot: false,
+      desc: "参与品牌新媒体矩阵的内容策划与运营，负责短视频脚本、社群互动与数据复盘，快速积累内容行业实战经验。",
+      reqs: ["本科在读或应届毕业生，每周到岗 4 天以上", "对内容与社交平台有热情，文案功底扎实", "会基础剪辑与图片处理者优先", "学习能力强，能快速响应热点"]
+    },
+    {
+      id: 12,
+      title: "嵌入式软件工程师",
+      company: "智驱科技",
+      color: "linear-gradient(135deg,#22d3ee,#a3e635)",
+      salaryMin: 18, salaryMax: 30, salaryText: "18-30K · 14薪",
+      city: "深圳", exp: "1-3年", edu: "本科", type: "全职",
+      tags: ["C/C++", "RTOS", "驱动开发", "物联网"],
+      industry: "智能硬件", size: "100-499人",
+      days: 6, hot: false,
+      desc: "负责智能硬件产品的嵌入式软件开发，涵盖驱动移植、系统稳定性优化与低功耗设计，参与产品从原型到量产的全过程。",
+      reqs: ["熟悉 C/C++，具备嵌入式开发经验", "了解 RTOS 或 Linux 驱动开发", "能看懂硬件原理图，会使用示波器等工具", "有物联网、消费电子量产经验者优先"]
+    }
+  ];
+
+  let companies = [
+    { name: "星云科技", color: "linear-gradient(135deg,#22d3ee,#818cf8)", industry: "企业服务 · 500-999人", count: 18 },
+    { name: "深智未来", color: "linear-gradient(135deg,#a78bfa,#f472b6)", industry: "人工智能 · 100-499人", count: 26 },
+    { name: "光年互动", color: "linear-gradient(135deg,#34d399,#22d3ee)", industry: "内容社区 · 1000-9999人", count: 42 },
+    { name: "云帆网络", color: "linear-gradient(135deg,#60a5fa,#818cf8)", industry: "云计算 · 500-999人", count: 31 },
+    { name: "像素工坊", color: "linear-gradient(135deg,#fbbf24,#f472b6)", industry: "设计服务 · 50-99人", count: 9 },
+    { name: "智驱科技", color: "linear-gradient(135deg,#22d3ee,#a3e635)", industry: "智能硬件 · 100-499人", count: 15 }
+  ];
+
+  const state = {
+    keyword: "",
+    city: "不限",
+    exp: "不限",
+    type: "不限",
+    salary: "不限",
+    sort: "recommend",
+    favorites: new Set(JSON.parse(localStorage.getItem("novahire_favs") || "[]"))
+  };
+
+  const $ = (sel) => document.querySelector(sel);
+  const listEl = $("#jobList");
+  const countEl = $("#count");
+  const toastEl = $("#toast");
+  let toastTimer = null;
+
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+  }
+
+  function saveFavorites() {
+    localStorage.setItem("novahire_favs", JSON.stringify([...state.favorites]));
+  }
+
+  const API_BASE = "api";
+  let apiOnline = false;
+  let refreshTimer = null;
+
+  async function loadRemoteData() {
+    try {
+      const [jobsRes, companiesRes, statsRes, favRes] = await Promise.all([
+        fetch(`${API_BASE}/jobs`, { headers: { Accept: "application/json" } }),
+        fetch(`${API_BASE}/companies`, { headers: { Accept: "application/json" } }),
+        fetch(`${API_BASE}/stats`, { headers: { Accept: "application/json" } }),
+        fetch(`${API_BASE}/favorites`, { headers: { Accept: "application/json" } })
+      ]);
+      if (!jobsRes.ok || !companiesRes.ok) throw new Error("API unavailable");
+      jobs = (await jobsRes.json()).map(normalizeJob);
+      companies = await companiesRes.json();
+      if (statsRes.ok) applyStats(await statsRes.json());
+      if (favRes.ok) {
+        const ids = await favRes.json();
+        if (Array.isArray(ids)) {
+          state.favorites = new Set(ids);
+          saveFavorites();
+        }
+      }
+      apiOnline = true;
+    } catch (error) {
+      apiOnline = false;
+    }
+  }
+
+  function normalizeJob(job) {
+    return {
+      ...job,
+      desc: job.description || job.desc || "",
+      reqs: job.requirements || job.reqs || []
+    };
+  }
+
+  function applyStats(stats) {
+    const fmt = (n) => new Intl.NumberFormat("zh-CN").format(n);
+    if (typeof stats.companies === "number") $("#statCompanies").textContent = fmt(stats.companies);
+    if (typeof stats.jobs === "number") $("#statJobs").textContent = fmt(stats.jobs);
+    if (typeof stats.responseHours === "number") $("#statResponse").textContent = `${stats.responseHours} 小时`;
+    if (typeof stats.placements === "number") $("#statPlacements").textContent = `${fmt(stats.placements)}+`;
+  }
+
+  function scheduleRefresh() {
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(refreshJobs, 260);
+  }
+
+  async function refreshJobs() {
+    if (!apiOnline) {
+      render();
+      return;
+    }
+    const params = new URLSearchParams();
+    if (state.keyword.trim()) params.set("keyword", state.keyword.trim());
+    if (state.city !== "不限") params.set("city", state.city);
+    if (state.exp !== "不限") params.set("exp", state.exp);
+    if (state.type !== "不限") params.set("type", state.type);
+    if (state.salary !== "不限") params.set("salary", state.salary);
+    params.set("sort", state.sort);
+    try {
+      const res = await fetch(`${API_BASE}/jobs?${params.toString()}`, {
+        headers: { Accept: "application/json" }
+      });
+      if (!res.ok) throw new Error("request failed");
+      jobs = (await res.json()).map(normalizeJob);
+      render();
+    } catch (error) {
+      apiOnline = false;
+      render();
+    }
+  }
+
+  function salaryMatch(job) {
+    const s = state.salary;
+    if (s === "不限") return true;
+    if (s === "0-15") return job.salaryMin < 15;
+    if (s === "15-25") return job.salaryMax >= 15 && job.salaryMin <= 25;
+    if (s === "25-40") return job.salaryMax >= 25 && job.salaryMin <= 40;
+    if (s === "40+") return job.salaryMax >= 40;
+    return true;
+  }
+
+  function getFiltered() {
+    const kw = state.keyword.trim().toLowerCase();
+    let result = jobs.filter((job) => {
+      const haystack = [job.title, job.company, ...job.tags].join(" ").toLowerCase();
+      if (kw && !haystack.includes(kw)) return false;
+      if (state.city !== "不限" && job.city !== state.city) return false;
+      if (state.exp !== "不限" && job.exp !== state.exp) return false;
+      if (state.type !== "不限" && job.type !== state.type) return false;
+      if (!salaryMatch(job)) return false;
+      return true;
+    });
+
+    if (state.sort === "latest") result.sort((a, b) => a.days - b.days);
+    if (state.sort === "salary") result.sort((a, b) => b.salaryMax - a.salaryMax);
+    return result;
+  }
+
+  function jobCard(job) {
+    const fav = state.favorites.has(job.id);
+    const hot = job.hot ? '<span class="hot-badge">急招</span>' : "";
+    return `
+      <article class="job-card glass" data-id="${job.id}" style="animation-delay:${Math.min(job.id * 25, 250)}ms">
+        <div class="job-top">
+          <div class="logo" style="background:${job.color}">${job.company.slice(0, 1)}</div>
+          <div class="job-main">
+            <div class="job-title-row">
+              <span class="job-title">${job.title}</span>${hot}
+            </div>
+            <div class="job-company">${job.company} · ${job.industry} · ${job.size}</div>
+          </div>
+          <div class="salary">${job.salaryText}</div>
+        </div>
+        <div class="job-tags">${job.tags.map((t) => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="job-bottom">
+          <span class="meta"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>${job.city}</span>
+          <span class="meta">${job.exp}</span>
+          <span class="meta">${job.edu}</span>
+          <span class="spacer"></span>
+          <span class="meta">${job.days < 1 ? "刚刚" : job.days + " 天前"}</span>
+          <button class="fav ${fav ? "active" : ""}" data-fav="${job.id}" aria-label="收藏">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.35-7-9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7 3.5C19 15.65 12 20 12 20z"/></svg>
+            ${fav ? "已收藏" : "收藏"}
+          </button>
+        </div>
+      </article>
+    `;
+  }
+
+  function render() {
+    const result = getFiltered();
+    countEl.textContent = result.length;
+    if (!result.length) {
+      listEl.innerHTML = `
+        <div class="empty">
+          <strong>没有找到匹配的职位</strong>
+          试试更换关键词，或点击左侧「重置全部筛选」
+        </div>`;
+      return;
+    }
+    listEl.innerHTML = result.map(jobCard).join("");
+  }
+
+  function renderCompanies() {
+    $("#companyGrid").innerHTML = companies
+      .map(
+        (c) => `
+      <div class="company-card glass">
+        <div class="logo" style="background:${c.color}">${c.name.slice(0, 1)}</div>
+        <div>
+          <b>${c.name}</b>
+          <small>${c.industry}${c.size ? " · " + c.size : ""}</small>
+        </div>
+        <span class="jobs-num">${c.count} 个职位</span>
+      </div>`
+      )
+      .join("");
+  }
+
+  listEl.addEventListener("click", (e) => {
+    const favBtn = e.target.closest("[data-fav]");
+    if (favBtn) {
+      e.stopPropagation();
+      toggleFavorite(Number(favBtn.dataset.fav));
+      return;
+    }
+    const card = e.target.closest(".job-card");
+    if (card) openModal(Number(card.dataset.id));
+  });
+
+  async function toggleFavorite(id) {
+    const adding = !state.favorites.has(id);
+    if (adding) state.favorites.add(id);
+    else state.favorites.delete(id);
+    saveFavorites();
+    render();
+    syncModalFav();
+
+    if (!apiOnline) {
+      showToast(adding ? "已加入收藏（本地保存）" : "已取消收藏");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/favorites/${id}`, { method: adding ? "POST" : "DELETE" });
+      if (!res.ok) throw new Error("request failed");
+      showToast(adding ? "已加入收藏，可在个人中心查看" : "已取消收藏");
+    } catch (error) {
+      if (adding) state.favorites.delete(id);
+      else state.favorites.add(id);
+      saveFavorites();
+      render();
+      syncModalFav();
+      showToast("收藏同步失败，请稍后重试");
+    }
+  }
+
+  let currentJob = null;
+
+  function openModal(id) {
+    const job = jobs.find((j) => j.id === id);
+    if (!job) return;
+    currentJob = job;
+    $("#modalLogo").textContent = job.company.slice(0, 1);
+    $("#modalLogo").style.background = job.color;
+    $("#modalTitle").textContent = job.title;
+    $("#modalCompany").textContent = `${job.company} · ${job.industry} · ${job.size}`;
+    $("#modalSalary").textContent = job.salaryText;
+    $("#modalTags").innerHTML = job.tags.map((t) => `<span class="tag">${t}</span>`).join("");
+    $("#modalDesc").textContent = job.desc;
+    $("#modalReqs").innerHTML = job.reqs.map((r) => `<li>${r}</li>`).join("");
+    $("#modalMeta").textContent = `${job.city} · ${job.exp} · ${job.edu} · ${job.type}`;
+    syncModalFav();
+    $("#modalBackdrop").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function syncModalFav() {
+    const btn = $("#modalFav");
+    if (!currentJob) return;
+    const active = state.favorites.has(currentJob.id);
+    btn.textContent = active ? "已收藏" : "收藏职位";
+    btn.style.color = active ? "#ff8fb1" : "";
+  }
+
+  function closeModal() {
+    $("#modalBackdrop").classList.remove("open");
+    document.body.style.overflow = "";
+    currentJob = null;
+  }
+
+  $("#modalClose").addEventListener("click", closeModal);
+  $("#modalBackdrop").addEventListener("click", (e) => {
+    if (e.target.id === "modalBackdrop") closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    if ($("#applyBackdrop").classList.contains("open")) closeApply();
+    else if ($("#modalBackdrop").classList.contains("open")) closeModal();
+  });
+  $("#modalFav").addEventListener("click", () => {
+    if (currentJob) toggleFavorite(currentJob.id);
+  });
+
+  let applyJob = null;
+
+  function openApply(job) {
+    applyJob = job;
+    $("#applyTarget").textContent = `${job.title} · ${job.company}`;
+    $("#applyHint").textContent = apiOnline
+      ? "提交后企业将通过邮箱联系你。"
+      : "当前为离线预览模式，投递不会提交到服务器。";
+    $("#applyBackdrop").classList.add("open");
+    $("#modalBackdrop").classList.remove("open");
+    document.body.style.overflow = "hidden";
+    setTimeout(() => $("#applyName").focus(), 60);
+  }
+
+  function closeApply() {
+    $("#applyBackdrop").classList.remove("open");
+    document.body.style.overflow = "";
+    $("#applyForm").reset();
+    applyJob = null;
+  }
+
+  $("#modalApply").addEventListener("click", () => {
+    if (currentJob) openApply(currentJob);
+  });
+
+  $("#applyClose").addEventListener("click", closeApply);
+  $("#applyCancel").addEventListener("click", closeApply);
+  $("#applyBackdrop").addEventListener("click", (e) => {
+    if (e.target.id === "applyBackdrop") closeApply();
+  });
+
+  $("#applyForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!applyJob) return;
+    const payload = {
+      jobId: applyJob.id,
+      name: $("#applyName").value.trim(),
+      email: $("#applyEmail").value.trim(),
+      phone: $("#applyPhone").value.trim(),
+      resumeUrl: $("#applyResume").value.trim(),
+      coverLetter: $("#applyCover").value.trim()
+    };
+    if (!payload.name || !payload.email) {
+      showToast("请填写姓名和邮箱");
+      return;
+    }
+    if (!apiOnline) {
+      showToast("当前为离线预览模式，投递未提交");
+      return;
+    }
+    const submitBtn = $("#applySubmit");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "提交中...";
+    try {
+      const res = await fetch(`${API_BASE}/applications`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.detail || data.title || "投递失败，请稍后重试");
+      }
+      const companyName = applyJob.company;
+      closeApply();
+      showToast(`简历已投递给「${companyName}」，投递编号 #${data.id}`);
+    } catch (error) {
+      showToast(error.message || "投递失败，请稍后重试");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "提交投递";
+    }
+  });
+
+  function syncChips(container, attr, value) {
+    document.querySelectorAll(`#${container} .chip`).forEach((chip) => {
+      chip.classList.toggle("active", chip.dataset[attr] === value);
+    });
+  }
+
+  $("#expChips").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    state.exp = chip.dataset.exp;
+    syncChips("expChips", "exp", state.exp);
+    refreshJobs();
+  });
+
+  $("#typeChips").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    state.type = chip.dataset.type;
+    syncChips("typeChips", "type", state.type);
+    refreshJobs();
+  });
+
+  $("#salary").addEventListener("change", (e) => {
+    state.salary = e.target.value;
+    refreshJobs();
+  });
+
+  $("#sort").addEventListener("change", (e) => {
+    state.sort = e.target.value;
+    refreshJobs();
+  });
+
+  $("#city").addEventListener("change", (e) => {
+    state.city = e.target.value;
+    refreshJobs();
+  });
+
+  $("#keyword").addEventListener("input", (e) => {
+    state.keyword = e.target.value;
+    scheduleRefresh();
+  });
+
+  $("#searchBtn").addEventListener("click", () => {
+    state.keyword = $("#keyword").value;
+    refreshJobs();
+    document.getElementById("jobs").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  $("#keyword").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") $("#searchBtn").click();
+  });
+
+  document.querySelectorAll(".hot-tags [data-keyword]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.keyword = btn.dataset.keyword;
+      $("#keyword").value = state.keyword;
+      refreshJobs();
+      document.getElementById("jobs").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  $("#resetBtn").addEventListener("click", () => {
+    state.keyword = "";
+    state.city = "不限";
+    state.exp = "不限";
+    state.type = "不限";
+    state.salary = "不限";
+    state.sort = "recommend";
+    $("#keyword").value = "";
+    $("#city").value = "不限";
+    $("#salary").value = "不限";
+    $("#sort").value = "recommend";
+    syncChips("expChips", "exp", "不限");
+    syncChips("typeChips", "type", "不限");
+    refreshJobs();
+    showToast("筛选条件已重置");
+  });
+
+  document.querySelectorAll("[data-toast]").forEach((btn) => {
+    btn.addEventListener("click", () => showToast(btn.dataset.toast));
+  });
+
+  (async function init() {
+    await loadRemoteData();
+    renderCompanies();
+    render();
+  })();
+</script>
+</body>
+</html>
