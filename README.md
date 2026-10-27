@@ -2,11 +2,19 @@
 
 求职招聘平台前台 + Spring Boot 3 后端，构建产物为可部署的 `novahire.war`。
 
+![NovaHire 预览](docs/preview.png)
+
+## 下载
+
+- 最新 WAR 包：[GitHub Releases](https://github.com/derek960629-afk/novahire-job-portal/releases/latest)
+- 在线预览：部署 WAR 后访问 `/novahire/`
+
 ## 目录结构
 
 ```
 job-portal/
 ├─ index.html                 # 前端页面（同时支持离线预览）
+├─ docs/preview.png           # 页面预览图
 ├─ server/                    # Spring Boot 3 + MySQL 后端工程
 │  ├─ src/main/java/com/novahire/
 │  ├─ src/main/resources/application.yml      # 默认 MySQL 配置
